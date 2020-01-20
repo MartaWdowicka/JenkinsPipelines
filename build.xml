@@ -40,7 +40,7 @@
 		<delete dir="build" />
 	</target>
     
-    <target name="junit" depends="complile">
+    <target name="junit" depends="compile">
         <junit haltonfailure="false" printsummary="true">
             <classpath>
                 <pathelement location="build/classes"/>
