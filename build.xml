@@ -1,6 +1,9 @@
 <?xml version="1.0" ?> 
 <project name="SampleBuildWithAnt" default="war">
-    <path id="compile.classpath">
+<taskdefresource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+classpath ="WebContent/WEB-INF/lib/checkstyle-7.8.2.-all.jar"/>
+
+       <path id="compile.classpath">
 		<fileset dir="WebContent/WEB-INF/lib">
 			<include name="*.jar"/>
 		</fileset>
@@ -9,13 +12,20 @@
 	<target name="init">
 		<mkdir dir="build/classes"/>
 		<mkdir dir="dist" />
-        <mkdir dir="test-reports"/>
+                <mkdir dir="test-reports"/>
 	</target>
 	
 	<target name="compile" depends="init" >
 		<javac destdir="build/classes" debug="true" srcdir="src">
-            <classpath refid="compile.classpath"/>
+                   <classpath refid="compile.classpath"/>
 		</javac>
+	</target>
+
+        <target name="checkstyle">
+		<checkstyle config="sun_checks.xml" failOnViolation="False">
+			<fileset dir="crc/example" includes="**/*.java"/>
+			<formatter type="xml" toFile="checkstyle_errors.xml"/>
+		</checkstyle>
 	</target>
 	
 	<target name="war" depends="compile">
@@ -38,7 +48,7 @@
                 <pathelement location="WebContent/WEB-INF/lib/junit.jar"/>
                 <pathelement location="WebContent/WEB-INF/lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
             </classpath>
-            <test name="junit.TestCalculator" haltonfailure="no" todir="test-reports">
+            <test name="junit.TestCalculator" haltonfailure="no" todir="test-reports" outfile="TestCalculator_result.txt">
                 <formatter type="plain" />
             </test>
         </junit>
