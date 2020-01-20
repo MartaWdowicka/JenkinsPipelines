@@ -5,19 +5,19 @@
 			<include name="*.jar"/>
 		</fileset>
 	</path>
-
+	
 	<target name="init">
 		<mkdir dir="build/classes"/>
 		<mkdir dir="dist" />
         <mkdir dir="test-reports"/>
 	</target>
-
+	
 	<target name="compile" depends="init" >
 		<javac destdir="build/classes" debug="true" srcdir="src">
             <classpath refid="compile.classpath"/>
 		</javac>
 	</target>
-
+	
 	<target name="war" depends="compile">
 		<war destfile="dist/SampleWebApp.war" webxml="WebContent/WEB-INF/web.xml">
 			<fileset dir="WebContent"/>
@@ -25,12 +25,12 @@
 			<classes dir="build/classes"/>
 		</war>
 	</target>
-
+	
 	<target name="clean">
 		<delete dir="dist" />
 		<delete dir="build" />
 	</target>
-
+    
     <target name="junit" depends="init">
         <junit haltonfailure="false" printsummary="true">
             <classpath>
@@ -43,5 +43,5 @@
             </test>
         </junit>
     </target>
-
+	
 </project>
